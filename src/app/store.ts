@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { articlesApi } from '../features/products/api/articlesApi'
-// import productsSlice from 'features/products/productsSlice'
+import { articlesReducer } from '@/features/products/model/ArticlesSlice'
+import { guardianApi } from '@/features/products/api/guardianApi'
 
 export const store = configureStore({
   reducer: {
-    [articlesApi.reducerPath]: articlesApi.reducer,
-    // articles: articlesSlice,
+    articles: articlesReducer,
+    [guardianApi.reducerPath]: guardianApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(articlesApi.middleware),
+    getDefaultMiddleware().concat(guardianApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

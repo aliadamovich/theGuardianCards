@@ -10,9 +10,6 @@ export type GuardianResponse = {
 		results: GuardianArticle[]
 	}
 }
-export interface ArticleFields {
-	thumbnail: string;
-}
 
 export type GuardianArticle = {
   id: string;
@@ -23,8 +20,20 @@ export type GuardianArticle = {
   webTitle: string;
   webUrl: string;
   apiUrl: string;
-  fields: ArticleFields;
   isHosted: boolean;
-  pillarId: string;
-  pillarName: string;
+  pillarId?: string;
+  pillarName?: string;
+	fields?: {
+    thumbnail?: string;
+    trailText?: string;
+    headline?: string;
+    body?: string;
+  };
+}
+
+export type SearchParams = {
+	q?: string;
+  page?: number;
+  pageSize?: number;
+  "show-fields"?: string;
 }

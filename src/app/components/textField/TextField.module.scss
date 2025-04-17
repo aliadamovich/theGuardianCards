@@ -1,0 +1,68 @@
+.box {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.inputContainer {
+	display: flex;
+	align-items: center;
+	position: relative;
+	width: 100%;
+
+}
+
+.input {
+	background-color: transparent;
+	border: 1px solid #fff;
+	border-radius: 2px;
+	height: 36px;
+	width: 100%;
+	padding: 6px 12px;
+	outline: none;
+	color: #fff;
+
+	&::placeholder {
+		color: #504f4f;
+	}
+
+	&:disabled {
+    color: #504f4f;
+		border-color: #504f4f;
+  }
+
+	&.error {
+		border-color: red;
+  }
+	&.search {
+	padding-left: 36px;
+	}
+
+  &:hover:not(&:disabled) {
+    border-color: #504f4f;
+  }
+
+}
+
+.startIcon {
+	position: absolute;
+	top: 50%;
+	left: 12px;
+	transform: translateY(-50%);
+	width: 20px;
+  height: 20px;
+	color: #504f4f;
+	display: grid;
+  place-items: center;
+}
+
+
+
+.errorText {
+	font-size: 12px;
+	color: red;
+	white-space: nowrap;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}

@@ -18,14 +18,21 @@
 	font-size: 18px;
 	font-weight: 600;
 	margin-bottom: 10px;
-	-webkit-line-clamp: 2;
+	-webkit-line-clamp: 3;
 	overflow: hidden;
-	text-overflow: ellipsis;
+	// text-overflow: ellipsis;
 	-webkit-box-orient: vertical;
 	display: -webkit-box;
-	max-height: 3.6em;
+
+	max-height: calc(1.2em * 3);
+	line-height: 1.2em;
+	position: relative;
 }
 
+.trailText {
+	color: #aaa;
+	margin-bottom: 16px;
+}
 
 .date {
 	text-align: right;
@@ -34,9 +41,12 @@
 }
 
 .section {
+	// display: flex;
+	// justify-content: space-between;
+	// gap: 10px;
+	text-align: right;
 	font-size: 12px;
 	margin-bottom: 8px;
-	text-align: right;
 	color: #aaa;
 }
 
@@ -62,6 +72,13 @@
 	margin-top: 10px;
 	border-top: 1px solid #636363;
 	padding: 10px 0;
+	button {
+		all: unset;
+		svg {
+			width: 20px;
+			height: 20px;
+		}
+	}
 }
 
 .like,
