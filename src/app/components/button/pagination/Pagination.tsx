@@ -20,8 +20,6 @@ export const Pagination = ({
 }: Props) => {
 	const {
 		pages,
-		startPage,
-		endPage,
 		hasPrevGroup,
 		hasNextGroup,
 		prevGroupPage,
@@ -38,11 +36,11 @@ export const Pagination = ({
 		<div className={clsx(s.pagination, className)}>
 			<div className={s.buttons}>
 				<button
-					className={clsx(s.button, currentPage === 1 && s.arrowDisabled)}
-					disabled={currentPage === 1}
+					className={clsx(s.button, !hasPrevGroup && s.arrowDisabled)}
+					disabled={!hasPrevGroup}
 					onClick={() => onPageChange(prevGroupPage)}
 					type={'button'}
-					aria-label="Previous page"
+					aria-label="Previous page group"
 				>
 					<FiChevronLeft />
 				</button>
@@ -54,20 +52,18 @@ export const Pagination = ({
 						key={index}
 						onClick={() => handlePageClick(page)}
 						type={'button'}
+						aria-label={`Page ${page}`}
 					>
 						{page}
 					</button>
 				))}
 
 				<button
-					className={clsx(
-						s.button,
-						(currentPage === totalPages || totalPages === 0) && s.arrowDisabled
-					)}
-					disabled={currentPage === totalPages || totalPages === 0}
+					className={clsx(s.button, !hasNextGroup && s.arrowDisabled)}
+					disabled={!hasNextGroup}
 					onClick={() => onPageChange(nextGroupPage)}
 					type={'button'}
-					aria-label="Next page"
+					aria-label="Next page group"
 				>
 					<FiChevronRight />
 				</button>

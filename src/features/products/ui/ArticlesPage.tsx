@@ -18,13 +18,14 @@ import { PATH } from '@/routes/Paths';
 import { Button } from '@/app/components/button/Button';
 import { TextField } from '@/app/components/textField/TextField';
 import { Pagination } from '@/app/components/button/pagination/Pagination';
+import { FilterButtons } from '@/features/products/ui/filterButtons/FilterButtons';
 
 export const ArticlesPage = () => {
 	const dispatch = useAppDispatch();
+	const activeFilter = useAppSelector(selectFilter);
 	const favorites = useAppSelector(selectFavorites);
 	const deletedArticles = useAppSelector(selectDeleted);
 	const userCreatedArticles = useAppSelector(selectUserCreated);
-	const activeFilter = useAppSelector(selectFilter);
 	const searchTerm = useAppSelector(selectSearchTerm);
 
 	// Pagination
@@ -74,10 +75,6 @@ export const ArticlesPage = () => {
 		dispatch(setSearchTerm(e.target.value));
 	};
 
-	// Filter toggle
-	const handleFilterChange = (filter: 'all' | 'favorites') => {
-		dispatch(setFilter(filter));
-	};
 
 	return (
 		<div className={s.articlesPageContainer}>
@@ -92,21 +89,9 @@ export const ArticlesPage = () => {
 			</div>
 
 			<div className={s.controls}>
-				<div className={s.filters}>
-					<Button variant={activeFilter === 'all' ? 'active' : 'primary'}
-						onClick={() => handleFilterChange('all')}
-					>
-						All Articles
-					</Button>
-					<Button variant={activeFilter === 'favorites' ? 'active' : 'primary'}
-						onClick={() => handleFilterChange('favorites')}
-					>
-						Favorites
-					</Button>
-				</div>
+				<FilterButtons />
 				<Button as={Link} to={PATH.CREATE_PRODUCT} variant='link'>Create New Article + </Button>
 			</div>
-
 
 
 			{isLoading && <div className={s.loading}>Loading articles...</div>}
@@ -128,33 +113,15 @@ export const ArticlesPage = () => {
 			</div>
 
 			{data && data.response.total > pageSize && (
-				<div className={s.pagination}>
-					<button
-						disabled={currentPage === 1}
-						onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-						className={s.paginationButton}
-					>
-						Previous
-					</button>
-
-					<span className={s.pageInfo}>
-						Page {currentPage} of {data.response.pages}
-					</span>
-
-					<button
-						disabled={currentPage === data.response.pages}
-						onClick={() => setCurrentPage(prev => Math.min(data.response.pages, prev + 1))}
-						className={s.paginationButton}
-					>
-						Next
-					</button>
+				<div className={s.paginationContainer}>
+					<Pagination
+						currentPage={currentPage}
+						onPageChange={(page: number) => { setCurrentPage(page) }}
+						totalPages={data?.response.total}
+					/>
 				</div>
 			)}
-			<Pagination
-				currentPage={currentPage} 
-				onPageChange={(page: number) => {setCurrentPage(page)}}
-				totalPages={data?.response.total}
-			/>
+			
 		</div>
 	);
 };

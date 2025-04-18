@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   gap: 5px;
   align-items: center;
-
+	color: #fff;
   .buttons {
     display: flex;
     column-gap: 5px;
@@ -14,12 +14,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-
       min-width: 24px;
       height: 24px;
-
       font-size: 12px;
-
       background: none;
       border: none;
       border-radius: 2px;
@@ -29,16 +26,9 @@
 				border-radius: 4px;
       }
 
-      &:focus-visible {
-        outline: 2px solid #082aec;
-      }
-
       &:disabled {
         cursor: default;
-
-        &:hover {
-          background-color: transparent;
-        }
+				color: #504f4f;
       }
 
       &.active {
@@ -50,34 +40,10 @@
 
       &.arrowDisabled {
         color: #504f4f;
+				border: none;
       }
     }
   }
-
-  .perPage {
-    display: flex;
-    align-items: center;
-    column-gap: 4px;
-    padding-left: 24px;
-
-    .select {
-      height: 22px;
-      padding: 0 6px;
-      column-gap: unset;
-
-      span {
-
-        &:nth-child(2) {
-          width: 16px;
-        }
-      }
-    }
-  }
-}
-
-.item {
-  height: 24px !important;
-  padding: 0 6px !important;
 }
 
 
