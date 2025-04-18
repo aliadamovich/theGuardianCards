@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { articlesReducer } from '@/features/products/model/ArticlesSlice'
-import { guardianApi } from '@/features/products/api/guardianApi'
+import { guardianApi } from '@/features/articles/api/guardianApi'
+import { articlesReducer } from '@/features/articles/model/ArticlesSlice'
 
 export const store = configureStore({
   reducer: {

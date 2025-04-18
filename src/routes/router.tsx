@@ -1,7 +1,8 @@
 import App from '@/app/App';
-import { ArticlesPage } from '../features/products/ui/ArticlesPage';
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { PATH } from '@/routes/Paths';
+import { ArticlesPage } from '@/features/articles/ui/ArticlesPage';
+import { SingleArticlePage } from '@/features/articles/ui/singleArticlePage/SingleArticlePage';
 
 
 
@@ -23,10 +24,10 @@ export const router = createBrowserRouter([
             index: true,
             element: <ArticlesPage />,
           },
-          // {
-          //   path: ':id',
-          //   element: <ArticleDetailPage />,
-          // }
+          {
+            path: ':id',
+            element: <SingleArticlePage />,
+          }
         ]
       },
       // {

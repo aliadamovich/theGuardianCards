@@ -1,4 +1,4 @@
-import { GuardianArticle } from '@/features/products/api/guardianApi.types';
+import { GuardianArticle } from '@/features/articles/api/guardianApi.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type ArticlesState = {
@@ -61,7 +61,6 @@ export const articlesSlice = createSlice({
 		selectDeleted: (state) => state.deleted,
 		selectFilter: (state) => state.filter,
 		selectSearchTerm: (state) => state.searchTerm,
-
 	}
 });
 

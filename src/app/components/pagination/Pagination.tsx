@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
-
 import s from './pagination.module.scss'
-import { usePagination } from '@/app/components/button/pagination/hooks/usePaginations'
+import { usePagination } from './usePagination'
 
 
 type Props = {

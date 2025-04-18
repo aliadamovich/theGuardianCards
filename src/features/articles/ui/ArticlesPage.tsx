@@ -6,7 +6,6 @@ import {
 	selectFilter,
 	selectSearchTerm,
 	selectUserCreated,
-	setFilter,
 	setSearchTerm
 } from '../model/ArticlesSlice';
 import Article from './article/Article';
@@ -17,8 +16,8 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks/hooks';
 import { PATH } from '@/routes/Paths';
 import { Button } from '@/app/components/button/Button';
 import { TextField } from '@/app/components/textField/TextField';
-import { Pagination } from '@/app/components/button/pagination/Pagination';
-import { FilterButtons } from '@/features/products/ui/filterButtons/FilterButtons';
+import { FilterButtons } from '@/features/articles/ui/filterButtons/FilterButtons';
+import { Pagination } from '@/app/components/pagination/Pagination';
 
 export const ArticlesPage = () => {
 	const dispatch = useAppDispatch();

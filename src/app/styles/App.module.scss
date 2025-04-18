@@ -1,6 +1,5 @@
 .appContainer {
 	min-height: 100vh;
-
 	display: flex;
 	flex-direction: column;
 }
@@ -14,6 +13,7 @@
 	flex: 1 1 auto;
 	margin: 0px auto;
 	max-width: 1200px;
+	width: 100%;
 	padding: 10px;
 }
 

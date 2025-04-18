@@ -1,15 +1,18 @@
-export type GuardianResponse = {
-	response: {
-		status: string
-		userTier: string
-		total: number
-		startIndex: number
-		pageSize: number
-		currentPage: number
-		pages: number
-		results: GuardianArticle[]
-	}
-}
+export type GuardianResponse<T extends 'list' | 'single'> = {
+  response: {
+    status: string;
+    userTier: string;
+    total: number;
+  } & (T extends 'list' ? {
+    startIndex: number;
+    pageSize: number;
+    currentPage: number;
+    pages: number;
+    results: GuardianArticle[];
+  } : {
+    content: GuardianArticle;
+  });
+};
 
 export type GuardianArticle = {
   id: string;
@@ -23,7 +26,7 @@ export type GuardianArticle = {
   isHosted: boolean;
   pillarId?: string;
   pillarName?: string;
-	fields?: {
+	fields: {
     thumbnail?: string;
     trailText?: string;
     headline?: string;

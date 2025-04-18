@@ -1,7 +1,7 @@
 import { Button } from '@/app/components/button/Button';
 import { useAppDispatch, useAppSelector } from '@/app/hooks/hooks';
-import { selectFilter, setFilter } from '@/features/products/model/ArticlesSlice';
 import s from './FilterButtons.module.scss'
+import { selectFilter, setFilter } from '@/features/articles/model/ArticlesSlice';
 
 export const FilterButtons = () => {
 	const dispatch = useAppDispatch();

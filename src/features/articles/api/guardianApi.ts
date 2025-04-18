@@ -9,7 +9,7 @@ export const guardianApi = createApi({
 		baseUrl: 'https://content.guardianapis.com/',
 	}),
 	endpoints: (builder) => ({
-		getArticles: builder.query<GuardianResponse, SearchParams>({
+		getArticles: builder.query<GuardianResponse<'list'>, SearchParams>({
 			query: (params) => ({
 				url: 'search',
 				params: {
@@ -19,10 +19,16 @@ export const guardianApi = createApi({
 				}
 			}),
 		}),
-		// getArticleById: builder.query<any, string>({
-		// 	query: (id) => `${id}?api-key=${API_KEY}`,
-		// }),
+		getArticleById: builder.query<GuardianResponse<'single'>, string>({
+			query: (id) => ({
+				url: `/${id}`,
+				params: {
+					'api-key': API_KEY,
+					'show-fields': 'thumbnail,trailText,headline,body'
+				}
+			})
+		}),
 	}),
 })
 
-export const { useGetArticlesQuery } = guardianApi
+export const { useGetArticlesQuery, useGetArticleByIdQuery } = guardianApi
