@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks/hooks';
 import { PATH } from '@/routes/Paths';
 import { Button } from '@/app/components/button/Button';
 import { TextField } from '@/app/components/textField/TextField';
+import { Pagination } from '@/app/components/button/pagination/Pagination';
 
 export const ArticlesPage = () => {
 	const dispatch = useAppDispatch();
@@ -80,6 +81,16 @@ export const ArticlesPage = () => {
 
 	return (
 		<div className={s.articlesPageContainer}>
+
+			<div className={s.searchBar}>
+				<TextField
+					search
+					placeholder="Search articles..."
+					value={searchTerm}
+					onChange={handleSearchChange}
+				/>
+			</div>
+
 			<div className={s.controls}>
 				<div className={s.filters}>
 					<Button variant={activeFilter === 'all' ? 'active' : 'primary'}
@@ -96,14 +107,7 @@ export const ArticlesPage = () => {
 				<Button as={Link} to={PATH.CREATE_PRODUCT} variant='link'>Create New Article + </Button>
 			</div>
 
-				<div className={s.searchBar}>
-					<TextField 
-						search
-						placeholder="Search articles..." 
-						value={searchTerm}
-						onChange={handleSearchChange}
-					/>
-				</div>
+
 
 			{isLoading && <div className={s.loading}>Loading articles...</div>}
 
@@ -146,6 +150,11 @@ export const ArticlesPage = () => {
 					</button>
 				</div>
 			)}
+			<Pagination
+				currentPage={currentPage} 
+				onPageChange={(page: number) => {setCurrentPage(page)}}
+				totalPages={data?.response.total}
+			/>
 		</div>
 	);
 };
