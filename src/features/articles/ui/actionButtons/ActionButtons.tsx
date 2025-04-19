@@ -5,7 +5,6 @@ import { deleteArticle, selectFavorites, selectUserCreated, toggleFavorite } fro
 import { MdDeleteOutline, MdStar, MdStarBorder } from 'react-icons/md';
 import { PATH } from '@/routes/Paths';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@/app/components/button/Button';
 import { MdEdit } from "react-icons/md";
 
 type Props = {

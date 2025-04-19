@@ -6,6 +6,9 @@ import { useGetArticleByIdQuery } from '@/features/articles/api/guardianApi';
 import { Button } from '@/app/components/button/Button';
 import { PATH } from '@/routes/Paths';
 import { ActionButtons } from '@/features/articles/ui/actionButtons/ActionButtons';
+import { Loader } from '@/app/components/loader/Loader';
+import { ErrorMessage } from '@/app/components/errorMessage/ErrorMessage';
+import { MSG } from '@/features/articles/utils/messagesVariables';
 
 export const SingleArticlePage = () => {
 	const { id } = useParams<{ id: string }>();
@@ -25,19 +28,8 @@ export const SingleArticlePage = () => {
 	const article = userArticle || apiArticle;
 
 
-	if (isLoading) {
-		return <div className={s.loading}>Loading article...</div>;
-	}
-
-	if (error || !article) {
-		return (
-			<div className={s.error}>
-				<h2>Article not found</h2>
-				<p>The article you're looking for doesn't exist or has been deleted.</p>
-				<Link to="/articles" className={s.backButton}>Back to Articles</Link>
-			</div>
-		);
-	}
+	if (isLoading) return <Loader fullScreen />;
+	if (error || !article) return <ErrorMessage message={MSG.ARTICLE_NOT_FOUND} fullScreen/>
 
 	return (
 		<div className={s.container}>
@@ -84,7 +76,7 @@ export const SingleArticlePage = () => {
 						/>
 					) : (
 						<p className={s.excerpt}>
-							{article.fields?.trailText || 'No content available'}
+							{article.fields?.trailText || MSG.NO_CONTENT}
 						</p>
 					)}
 				</div>

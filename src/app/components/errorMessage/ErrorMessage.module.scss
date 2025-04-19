@@ -1,7 +1,20 @@
+.errorWrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&.fullScreen {
+	height: calc(100vh - 120px);
+	flex-direction: column;
+}
+}
+
 .error {
-	color: red;
+	display: block;
+	color: #fff;
 	padding: 12px 16px;
 	border-radius: 8px;
 	font-size: 14px;
-	text-align: center;
 }
+
+

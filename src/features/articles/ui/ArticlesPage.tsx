@@ -19,6 +19,7 @@ import { FilterButtons } from '@/features/articles/ui/filterButtons/FilterButton
 import { Pagination } from '@/app/components/pagination/Pagination';
 import { Loader } from '@/app/components/loader/Loader';
 import { ErrorMessage } from '@/app/components/errorMessage/ErrorMessage';
+import { MSG } from '@/features/articles/utils/messagesVariables';
 
 export const ArticlesPage = () => {
 	const dispatch = useAppDispatch();
@@ -96,15 +97,14 @@ export const ArticlesPage = () => {
 			</div>
 
 			{isLoading && <Loader />}
-			{error && <ErrorMessage message='Error loading articles. Please try again later'/>}
+			{error && <ErrorMessage message={MSG.ERROR_LOADING} />}
 
 			{!isLoading && !error && filteredArticles.length === 0 && (
-				<div className={s.noResults}>
-					{activeFilter === 'favorites'
-						? 'No favorite articles yet. Click the heart icon to add articles to your favorites.'
-						: 'No articles found. Try adjusting your search.'}
-				</div>
-			)}
+				<ErrorMessage message={activeFilter === 'favorites' ? MSG.NO_FAVORITES : MSG.ERROR_LOADING} />)
+				// <div className={s.noResults}>
+				// 	{activeFilter === 'favorites' ? MSG.NO_FAVORITES : MSG.ERROR_LOADING}
+				// </div>
+			}
 
 			<div className={s.articleGrid}>
 				{filteredArticles.map(article => (

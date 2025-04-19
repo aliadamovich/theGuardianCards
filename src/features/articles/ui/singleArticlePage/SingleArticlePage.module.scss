@@ -1,5 +1,6 @@
 .container {
-	max-width: 1000px;
+	max-width: 900px;
+	width: 100%;
 	margin: 0px auto;
 }
 
@@ -18,25 +19,6 @@
 	align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
-}
-
-.editButton, .favoriteButton, .deleteButton {
-  // padding: 0.5rem 1rem;
-  // border-radius: 4px;
-  // font-weight: 500;
-  // transition: all 0.2s ease;
-  // border: none;
-  // font-size: 0.9rem;
-}
-
-.editButton {
-  // background-color: #f5f5f5;
-  // color: #333;
-  // text-decoration: none;
-  
-  // &:hover {
-  //   background-color: #e0e0e0;
-  // }
 }
 
 

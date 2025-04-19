@@ -1,10 +1,11 @@
+import clsx from 'clsx'
 import s from './Loader.module.scss'
 
 
-export const Loader = () => {
+export const Loader = ({fullScreen}: {fullScreen?: boolean}) => {
 	return (
 		<div
-			className={s.loaderWrapper}
+			className={clsx(s.loaderWrapper, fullScreen && s.fullScreen)}
 			role="status"
 			aria-busy="true"
 		>
