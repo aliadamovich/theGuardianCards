@@ -8,7 +8,7 @@ import { PATH } from '@/routes/Paths';
 import { ActionButtons } from '@/features/articles/ui/actionButtons/ActionButtons';
 import { Loader } from '@/app/components/loader/Loader';
 import { ErrorMessage } from '@/app/components/errorMessage/ErrorMessage';
-import { MSG } from '@/features/articles/utils/messagesVariables';
+import { MSG } from '@/features/articles/lib/messagesVariables';
 
 export const SingleArticlePage = () => {
 	const { id } = useParams<{ id: string }>();
@@ -37,7 +37,7 @@ export const SingleArticlePage = () => {
 				<Button as={Link} to={PATH.PRODUCTS} variant='link'>← Back to Articles</Button>
 
 				<div className={s.actions}>
-					<ActionButtons articleId={article.id} isHovering redirectAfterDeleting/>
+					<ActionButtons article={article} isHovering redirectAfterDeleting/>
 				</div>
 			</div>
 

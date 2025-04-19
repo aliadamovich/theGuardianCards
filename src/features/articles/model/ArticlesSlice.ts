@@ -2,7 +2,8 @@ import { GuardianArticle } from '@/features/articles/api/guardianApi.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type ArticlesState = {
-  favorites: string[];
+  favoriteIds: string[];
+	favoriteArticles: GuardianArticle[];
   userCreated: GuardianArticle[];
   deleted: string[];
   filter: 'all' | 'favorites';
@@ -13,34 +14,36 @@ type ArticlesState = {
 export const articlesSlice = createSlice({
   name: 'articles',
   initialState: {
-		favorites: [],
+		favoriteIds: [],
+		favoriteArticles: [],
 		userCreated: [],
 		deleted: [],
 		filter: 'all',
 		searchTerm: '',
 	} as ArticlesState,
   reducers: {
-    toggleFavorite: (state, action: PayloadAction<string>) => {
-      const articleId = action.payload;
-      const favoriteIndex = state.favorites.indexOf(articleId);
-      
-      if (favoriteIndex === -1) {
-        state.favorites.push(articleId);
+    toggleFavorite: (state, action: PayloadAction<GuardianArticle>) => {
+
+      if (state.favoriteIds.includes(action.payload.id)) {
+				state.favoriteIds = state.favoriteIds.filter(id => id !== action.payload.id);
+				state.favoriteArticles = state.favoriteArticles.filter(art => art.id !== action.payload.id)
       } else {
-        state.favorites.splice(favoriteIndex, 1);
+        state.favoriteIds.push(action.payload.id);
+				state.favoriteArticles.unshift(action.payload)
       }
     },
     deleteArticle: (state, action: PayloadAction<string>) => {
       const articleId = action.payload;
       state.deleted.push(articleId);
       
-      const favoriteIndex = state.favorites.indexOf(articleId);
+      const favoriteIndex = state.favoriteIds.indexOf(articleId);
       if (favoriteIndex !== -1) {
-        state.favorites.splice(favoriteIndex, 1);
+        state.favoriteIds.splice(favoriteIndex, 1);
       }
+			state.favoriteArticles = state.favoriteArticles.filter(article => article.id !== articleId);
     },
     addUserArticle: (state, action: PayloadAction<GuardianArticle>) => {
-      state.userCreated.push(action.payload);
+      state.userCreated.unshift(action.payload);
     },
     updateUserArticle: (state, action: PayloadAction<GuardianArticle>) => {
       const index = state.userCreated.findIndex(article => article.id === action.payload.id);
@@ -56,7 +59,8 @@ export const articlesSlice = createSlice({
     },
   },
 	selectors: {
-		selectFavorites: (state) => state.favorites,
+		selectFavoriteIds: (state) => state.favoriteIds,
+		selectFavoriteArticles: (state) => state.favoriteArticles,
 		selectUserCreated: (state) => state.userCreated,
 		selectDeleted: (state) => state.deleted,
 		selectFilter: (state) => state.filter,
@@ -73,6 +77,6 @@ export const {
   setSearchTerm
 } = articlesSlice.actions;
 
-export const { selectDeleted, selectFavorites, selectFilter, selectSearchTerm, selectUserCreated } = articlesSlice.selectors
+export const { selectDeleted, selectFavoriteIds, selectFavoriteArticles, selectFilter, selectSearchTerm, selectUserCreated } = articlesSlice.selectors
 
 export const articlesReducer = articlesSlice.reducer;

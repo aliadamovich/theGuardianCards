@@ -8,7 +8,7 @@ import { addUserArticle, selectUserCreated, updateUserArticle } from '@/features
 import { GuardianArticle } from '@/features/articles/api/guardianApi.types';
 import { Button } from '@/app/components/button/Button';
 import { TextField } from '@/app/components/textField/TextField';
-import { ArticleFormValues, articleSchema } from '@/features/articles/utils/articleSchema';
+import { ArticleFormValues, articleSchema } from '@/features/articles/lib/articleSchema';
 import { PATH } from '@/routes/Paths';
 
 

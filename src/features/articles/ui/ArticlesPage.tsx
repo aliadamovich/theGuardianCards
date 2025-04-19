@@ -1,118 +1,68 @@
 import { useState, useEffect } from 'react';
 import { useGetArticlesQuery } from '../api/guardianApi';
 import {
-	selectFavorites,
 	selectDeleted,
 	selectFilter,
 	selectSearchTerm,
-	selectUserCreated,
-	setSearchTerm
-} from '../model/ArticlesSlice';
+	selectUserCreated} from '../model/ArticlesSlice';
 import {Article} from './article/Article';
 import { Link } from 'react-router-dom';
 import s from './ArticlesPage.module.scss';
-import { useAppDispatch, useAppSelector } from '@/app/hooks/hooks';
+import { useAppSelector } from '@/app/hooks/hooks';
 import { PATH } from '@/routes/Paths';
 import { Button } from '@/app/components/button/Button';
-import { TextField } from '@/app/components/textField/TextField';
 import { FilterButtons } from '@/features/articles/ui/filterButtons/FilterButtons';
 import { Pagination } from '@/app/components/pagination/Pagination';
 import { Loader } from '@/app/components/loader/Loader';
 import { ErrorMessage } from '@/app/components/errorMessage/ErrorMessage';
-import { MSG } from '@/features/articles/utils/messagesVariables';
+import { MSG } from '@/features/articles/lib/messagesVariables';
+import { ArticleSearch } from '@/features/articles/ui/articleSearch/ArticleSearch';
+import { useDebounceValue } from '@/features/articles/lib/hooks/useDebounceValue';
+import { useFilteredArticles } from '@/features/articles/lib/hooks/useFilterdArticles';
 
 export const ArticlesPage = () => {
-	const dispatch = useAppDispatch();
 	const activeFilter = useAppSelector(selectFilter);
-	const favorites = useAppSelector(selectFavorites);
-	const deletedArticles = useAppSelector(selectDeleted);
-	const userCreatedArticles = useAppSelector(selectUserCreated);
-	const searchTerm = useAppSelector(selectSearchTerm);
-	const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
-	const [currentPage, setCurrentPage] = useState(1);
-	const pageSize = 9;
-	// Fetch articles from Guardian API
-	const { data, error, isLoading } = useGetArticlesQuery({
-		q: debouncedSearchTerm || undefined,
-		page: currentPage,
-		pageSize: pageSize,
-	});
-	// Pagination
-	let totalItems = activeFilter === 'favorites' ? favorites.length : data?.response.total || 0;
-	const totalPages = Math.ceil(totalItems / pageSize)
-	console.log(totalPages);
+
+	const {
+		articlesToShow,
+		currentPage,
+		error,
+		isFetching,
+		isLoading,
+		pageSize,
+		setCurrentPage,
+		totalItems
+	} = useFilteredArticles()
+	console.log(pageSize);
+	console.log('total', totalItems);
 	
-
-
-	// Update debounced search term
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setDebouncedSearchTerm(searchTerm);
-		}, 500);
-
-		return () => clearTimeout(timer);
-	}, [searchTerm]);
-
-
-
-	// Reset to page 1 when search changes
-	useEffect(() => {
-		setCurrentPage(1);
-	}, [debouncedSearchTerm]);
-
-	// Combine API articles and user-created articles
-	const allArticles = [
-		...userCreatedArticles,
-		...(data?.response.results || [])
-	];
-
-	// Filter out deleted articles
-	const articlesToShow = allArticles.filter(article => !deletedArticles.includes(article.id));
-
-	// Apply filter (all vs favorites)
-	const filteredArticles = activeFilter === 'favorites'
-		? articlesToShow.filter(article => favorites.includes(article.id))
-		: articlesToShow;
-
-	// Search function
-	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		dispatch(setSearchTerm(e.target.value));
-	};
-
+	
 	return (
 		<div className={s.articlesPageContainer}>
 
 			<div className={s.searchBar}>
-				<TextField
-					search
-					placeholder="Search articles..."
-					value={searchTerm}
-					onChange={handleSearchChange}
-				/>
+				<ArticleSearch />
 			</div>
 
 			<div className={s.controls}>
-				<FilterButtons disabled={isLoading}/>
+				<FilterButtons disabled={isLoading || isFetching}/>
 				<Button as={Link} to={PATH.CREATE_PRODUCT} variant='link'>Create New Article + </Button>
+	
 			</div>
-
 			{isLoading && <Loader />}
 			{error && <ErrorMessage message={MSG.ERROR_LOADING} />}
 
-			{!isLoading && !error && filteredArticles.length === 0 && (
-				<ErrorMessage message={activeFilter === 'favorites' ? MSG.NO_FAVORITES : MSG.ERROR_LOADING} />)
-				// <div className={s.noResults}>
-				// 	{activeFilter === 'favorites' ? MSG.NO_FAVORITES : MSG.ERROR_LOADING}
-				// </div>
+			{!isLoading && !error && articlesToShow.length === 0 && (
+				<ErrorMessage message={activeFilter === 'favorites' ? MSG.NO_FAVORITES : MSG.NO_ARTICLES} />)
 			}
 
 			<div className={s.articleGrid}>
-				{filteredArticles.map(article => (
+				{articlesToShow.map(article => (
 					<Article key={article.id} article={article} />
 				))}
 			</div>
-
-			{totalItems > pageSize && (
+			
+			{(totalItems > pageSize && activeFilter !== 'favorites') && (
 				<div className={s.paginationContainer}>
 					<Pagination
 						currentPage={currentPage}
@@ -121,7 +71,6 @@ export const ArticlesPage = () => {
 					/>
 				</div>
 			)}
-			
 		</div>
 	);
 };
