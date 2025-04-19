@@ -3,14 +3,14 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { PATH } from '@/routes/Paths';
 import { ArticlesPage } from '@/features/articles/ui/ArticlesPage';
 import { SingleArticlePage } from '@/features/articles/ui/singleArticlePage/SingleArticlePage';
-
-
+import { CreateArticlePage } from '@/features/articles/ui/createArticlePage/CreateArticlePage';
+import { NotFound } from '@/app/components/notFound/NotFound';
 
 export const router = createBrowserRouter([
   {
     path: PATH.ROOT,
     element: <App />,
-		errorElement: <Navigate to={PATH.NOT_FOUND} />,
+		errorElement: <NotFound />,
 
     children: [
       {
@@ -30,18 +30,23 @@ export const router = createBrowserRouter([
           }
         ]
       },
-      // {
-      //   path: 'create-product',
-      //   element: <CreateArticlePage />,
-      // },
-      // {
-      //   path: 'edit-product/:id',
-      //   element: <CreateArticlePage />,
-      // },
-      // {
-      //   path: PATH.NOT_FOUND,
-      //   element: <NotFoundPage />,
-      // }
+      {
+        path: PATH.CREATE_PRODUCT,
+        element: <CreateArticlePage />,
+      },
+      {
+				path: `${PATH.EDIT_PRODUCT}/:id`,
+        element: <CreateArticlePage />,
+      },
+      
     ],
   },
+	{
+		path: PATH.NOT_FOUND,
+		element: <NotFound />,
+	},
+	{
+		path: '*',
+		element: <NotFound />,
+	},
 ]);

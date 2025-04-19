@@ -1,0 +1,50 @@
+.iconButtons {
+	display: flex;
+	justify-content: end;
+	gap: 15px;
+	transition: all 0.3s ease 0s;
+
+	a, button {
+		border: none;
+		background-color: transparent;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: all 0.3s ease 0s;
+		cursor: pointer;
+		&:hover{
+			svg {
+			background-color: #636262;
+			}
+		}
+		svg {
+			width: 30px;
+			height: 30px;
+			padding: 4px;
+			border-radius: 50%;
+			transition: all 0.3s ease 0s;
+		}
+	}
+}
+
+.likeButton {
+	svg {
+		color: yellow
+	}
+}
+
+.deleteButton {
+	visibility: hidden;
+	opacity: 0;
+	svg {
+		color: #fff;
+	}
+	&.hoveredButton {
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+.editButton {
+	@extend .deleteButton
+}

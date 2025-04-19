@@ -10,15 +10,19 @@ export const guardianApi = createApi({
 	}),
 	endpoints: (builder) => ({
 		getArticles: builder.query<GuardianResponse<'list'>, SearchParams>({
-			query: (params) => ({
+			query: (params) => {
+				const { pageSize, ...rest } = params;
+				return {
 				url: 'search',
 				params: {
-					...params, 
+					...rest, 
 					'api-key': API_KEY,
+					'page-size': pageSize,
 					'show-fields': params['show-fields'] || 'thumbnail,trailText,headline',
 				}
-			}),
-		}),
+			}
+		},
+	}),
 		getArticleById: builder.query<GuardianResponse<'single'>, string>({
 			query: (id) => ({
 				url: `/${id}`,

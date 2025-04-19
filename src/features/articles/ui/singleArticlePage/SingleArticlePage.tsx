@@ -1,29 +1,22 @@
-// src/features/articles/pages/ArticleDetailPage.tsx
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import {
-	selectUserCreated,
-	selectFavorites,
-	toggleFavorite,
-	deleteArticle
-} from '../../model/ArticlesSlice';
+import { useParams, Link } from 'react-router-dom';
+import { selectUserCreated } from '../../model/ArticlesSlice';
 import s from './SingleArticlePage.module.scss';
-import { useAppDispatch, useAppSelector } from '@/app/hooks/hooks';
+import { useAppSelector } from '@/app/hooks/hooks';
 import { useGetArticleByIdQuery } from '@/features/articles/api/guardianApi';
+import { Button } from '@/app/components/button/Button';
+import { PATH } from '@/routes/Paths';
+import { ActionButtons } from '@/features/articles/ui/actionButtons/ActionButtons';
 
 export const SingleArticlePage = () => {
 	const { id } = useParams<{ id: string }>();
-	const navigate = useNavigate();
-	const dispatch = useAppDispatch();
 
 	if (!id) {
 		return <div>Invalid article ID</div>;
 	}
 
-	// Check if this is a user-created article first
 	const userCreatedArticles = useAppSelector(selectUserCreated);
 	const userArticle = userCreatedArticles.find(article => article.id === id);
 
-	// If not user-created, fetch from API
 	const { data, error, isLoading } = useGetArticleByIdQuery(id, {
 		skip: !!userArticle
 	});
@@ -31,21 +24,6 @@ export const SingleArticlePage = () => {
 	const apiArticle = data?.response?.content;
 	const article = userArticle || apiArticle;
 
-	const favorites = useAppSelector(selectFavorites);
-	const isFavorite = article && favorites.includes(article.id);
-
-	const handleToggleFavorite = () => {
-		if (article) {
-			dispatch(toggleFavorite(article.id));
-		}
-	};
-
-	const handleDelete = () => {
-		if (article) {
-			dispatch(deleteArticle(article.id));
-			navigate('/articles');
-		}
-	};
 
 	if (isLoading) {
 		return <div className={s.loading}>Loading article...</div>;
@@ -63,29 +41,11 @@ export const SingleArticlePage = () => {
 
 	return (
 		<div className={s.container}>
-			<div className={s.header}>
-				<Link to="/articles" className={s.backButton}>← Back to Articles</Link>
+			<div className={s.top}>
+				<Button as={Link} to={PATH.PRODUCTS} variant='link'>← Back to Articles</Button>
 
 				<div className={s.actions}>
-					{userArticle && (
-						<Link to={`/edit-article/${id}`} className={s.editButton}>
-							Edit Article
-						</Link>
-					)}
-
-					<button
-						className={`${s.favoriteButton} ${isFavorite ? s.favorited : ''}`}
-						onClick={handleToggleFavorite}
-					>
-						{isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-					</button>
-
-					<button
-						className={s.deleteButton}
-						onClick={handleDelete}
-					>
-						Delete Article
-					</button>
+					<ActionButtons articleId={article.id} isHovering redirectAfterDeleting/>
 				</div>
 			</div>
 
@@ -94,7 +54,7 @@ export const SingleArticlePage = () => {
 
 				<div className={s.meta}>
 					<span className={s.section}>{article.sectionName}</span>
-					<span className={s.date}>
+					<span>
 						{new Date(article.webPublicationDate).toLocaleDateString()}
 					</span>
 				</div>
@@ -110,12 +70,11 @@ export const SingleArticlePage = () => {
 				)}
 
 				<div className={s.content}>
-					{article.fields?.headline && (
-						<h2 className={s.headline}>{article.fields.headline}</h2>
-					)}
 
 					{article.fields?.trailText && (
-						<p className={s.trailText}>{article.fields.trailText}</p>
+						<p className={s.trailText}
+							dangerouslySetInnerHTML={{ __html: article.fields.trailText }}>
+						</p>
 					)}
 
 					{article.fields?.body ? (

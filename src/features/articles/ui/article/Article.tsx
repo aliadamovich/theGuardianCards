@@ -8,8 +8,10 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks/hooks';
 import { deleteArticle, selectFavorites, toggleFavorite } from '@/features/articles/model/ArticlesSlice';
 import clsx from 'clsx';
 import { PATH } from '@/routes/Paths';
+import { ActionButtons } from '@/features/articles/ui/actionButtons/ActionButtons';
+import noImage from '@/assets/no-photo.jpg'
 
-const Article = ({ article }: { article: GuardianArticle }) => {
+export const Article = ({ article }: { article: GuardianArticle }) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [isHovering, setIsHovering] = useState(false);
@@ -23,15 +25,7 @@ const Article = ({ article }: { article: GuardianArticle }) => {
 	// const trailText = article.fields?.trailText || '';
 
 
-	const handleFavoriteClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		dispatch(toggleFavorite(article.id));
-	};
 
-	const handleDeleteClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		dispatch(deleteArticle(article.id));
-	};
 	return (
 		<div
 			key={article.id}
@@ -51,32 +45,10 @@ const Article = ({ article }: { article: GuardianArticle }) => {
 					{article.fields?.thumbnail ? (
 						<img src={article.fields.thumbnail} alt={article.webTitle} className={s.image} />
 					) : (
-						<div className={s.placeholderImage}>No Image</div>
+						<img src={noImage} alt="image not found" className={s.image} />
 					)}
 			</div>
-
-			<div className={s.iconButtons}>
-
-				<button
-					className={clsx(s.deleteButton, isHovering && s.hoveredButton)}
-					onClick={handleDeleteClick}
-					aria-label="Delete article"
-					title="Delete article"
-				>
-					<MdDeleteOutline />
-				</button>
-
-				<button
-					className={`${s.likeButton} ${isFavorite ? s.liked : ''}`}
-					onClick={handleFavoriteClick}
-					aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-					title={isFavorite ? "Remove from favorites" : "Add to favorites"}
-				>
-					{isFavorite ? <MdStar /> : <MdStarBorder />}
-				</button>
-			</div>
+			<ActionButtons articleId={article.id} isHovering={isHovering}/>
 		</div>
 	)
 }
-
-export default Article

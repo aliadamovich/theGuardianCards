@@ -42,7 +42,7 @@ export const TextField = ({
 
 	return (
 		<div className={s.box}>
-			{label && <label htmlFor={inputId} />}
+			{label && <label htmlFor={inputId} className={s.label}>{label}</label>}
 			<div className={s.inputContainer}>
 				{search && <span className={s.startIcon}><FiSearch /></span>}
 				<input

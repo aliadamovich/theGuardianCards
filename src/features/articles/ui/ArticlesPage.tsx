@@ -8,16 +8,17 @@ import {
 	selectUserCreated,
 	setSearchTerm
 } from '../model/ArticlesSlice';
-import Article from './article/Article';
+import {Article} from './article/Article';
 import { Link } from 'react-router-dom';
 import s from './ArticlesPage.module.scss';
-import { GuardianArticle } from '../api/guardianApi.types';
 import { useAppDispatch, useAppSelector } from '@/app/hooks/hooks';
 import { PATH } from '@/routes/Paths';
 import { Button } from '@/app/components/button/Button';
 import { TextField } from '@/app/components/textField/TextField';
 import { FilterButtons } from '@/features/articles/ui/filterButtons/FilterButtons';
 import { Pagination } from '@/app/components/pagination/Pagination';
+import { Loader } from '@/app/components/loader/Loader';
+import { ErrorMessage } from '@/app/components/errorMessage/ErrorMessage';
 
 export const ArticlesPage = () => {
 	const dispatch = useAppDispatch();
@@ -26,13 +27,21 @@ export const ArticlesPage = () => {
 	const deletedArticles = useAppSelector(selectDeleted);
 	const userCreatedArticles = useAppSelector(selectUserCreated);
 	const searchTerm = useAppSelector(selectSearchTerm);
-
-	// Pagination
-	const [currentPage, setCurrentPage] = useState(1);
-	const pageSize = 12;
-
-	// Debounced search term
 	const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+	const [currentPage, setCurrentPage] = useState(1);
+	const pageSize = 9;
+	// Fetch articles from Guardian API
+	const { data, error, isLoading } = useGetArticlesQuery({
+		q: debouncedSearchTerm || undefined,
+		page: currentPage,
+		pageSize: pageSize,
+	});
+	// Pagination
+	let totalItems = activeFilter === 'favorites' ? favorites.length : data?.response.total || 0;
+	const totalPages = Math.ceil(totalItems / pageSize)
+	console.log(totalPages);
+	
+
 
 	// Update debounced search term
 	useEffect(() => {
@@ -43,12 +52,7 @@ export const ArticlesPage = () => {
 		return () => clearTimeout(timer);
 	}, [searchTerm]);
 
-	// Fetch articles from Guardian API
-	const { data, error, isLoading } = useGetArticlesQuery({
-		q: debouncedSearchTerm || undefined,
-		page: currentPage,
-		pageSize: pageSize,
-	});
+
 
 	// Reset to page 1 when search changes
 	useEffect(() => {
@@ -57,8 +61,8 @@ export const ArticlesPage = () => {
 
 	// Combine API articles and user-created articles
 	const allArticles = [
-		...(data?.response.results || []),
-		...userCreatedArticles
+		...userCreatedArticles,
+		...(data?.response.results || [])
 	];
 
 	// Filter out deleted articles
@@ -74,7 +78,6 @@ export const ArticlesPage = () => {
 		dispatch(setSearchTerm(e.target.value));
 	};
 
-
 	return (
 		<div className={s.articlesPageContainer}>
 
@@ -88,14 +91,12 @@ export const ArticlesPage = () => {
 			</div>
 
 			<div className={s.controls}>
-				<FilterButtons />
+				<FilterButtons disabled={isLoading}/>
 				<Button as={Link} to={PATH.CREATE_PRODUCT} variant='link'>Create New Article + </Button>
 			</div>
 
-
-			{isLoading && <div className={s.loading}>Loading articles...</div>}
-
-			{error && <div className={s.error}>Error loading articles. Please try again later.</div>}
+			{isLoading && <Loader />}
+			{error && <ErrorMessage message='Error loading articles. Please try again later'/>}
 
 			{!isLoading && !error && filteredArticles.length === 0 && (
 				<div className={s.noResults}>
@@ -111,12 +112,12 @@ export const ArticlesPage = () => {
 				))}
 			</div>
 
-			{data && data.response.total > pageSize && (
+			{totalItems > pageSize && (
 				<div className={s.paginationContainer}>
 					<Pagination
 						currentPage={currentPage}
 						onPageChange={(page: number) => { setCurrentPage(page) }}
-						totalPages={data?.response.total}
+						totalPages={Math.ceil(totalItems / pageSize)}
 					/>
 				</div>
 			)}
@@ -124,5 +125,4 @@ export const ArticlesPage = () => {
 		</div>
 	);
 };
-
 
