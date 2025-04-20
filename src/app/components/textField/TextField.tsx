@@ -1,9 +1,4 @@
-import {
-	ComponentProps,
-	KeyboardEvent,
-	ReactNode,
-	useId,
-} from 'react'
+import { ComponentProps, KeyboardEvent, ReactNode, useId } from 'react'
 import s from './TextField.module.scss'
 import { FiSearch } from 'react-icons/fi'
 import clsx from 'clsx'
@@ -38,13 +33,19 @@ export const TextField = ({
 		onKeyDown?.(e)
 	}
 
-
-
 	return (
 		<div className={s.box}>
-			{label && <label htmlFor={inputId} className={s.label}>{label}</label>}
+			{label && (
+				<label htmlFor={inputId} className={s.label}>
+					{label}
+				</label>
+			)}
 			<div className={s.inputContainer}>
-				{search && <span className={s.startIcon}><FiSearch /></span>}
+				{search && (
+					<span className={s.startIcon}>
+						<FiSearch />
+					</span>
+				)}
 				<input
 					type={type}
 					className={classNames}
@@ -53,7 +54,6 @@ export const TextField = ({
 					{...rest}
 					id={inputId}
 				/>
-
 			</div>
 			{showError && <p className={s.errorText}>{errorMessage}</p>}
 		</div>

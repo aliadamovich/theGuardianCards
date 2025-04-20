@@ -13,7 +13,11 @@ export const ErrorMessage = ({ message, fullScreen = false }: ErrorMessageProps)
 	return (
 		<div className={clsx(s.errorWrapper, fullScreen && s.fullScreen)}>
 			<div className={s.error}>{message}</div>
-			{fullScreen && <Button as={Link} variant='link' to={PATH.ROOT}>Back to Main Page</Button>}
+			{fullScreen && (
+				<Button as={Link} variant="link" to={PATH.ROOT}>
+					Back to Main Page
+				</Button>
+			)}
 		</div>
 	)
 }

@@ -4,9 +4,9 @@
 	align-items: center;
 
 	&.fullScreen {
-	height: calc(100vh - 120px);
-	flex-direction: column;
-}
+		height: calc(100vh - 120px);
+		flex-direction: column;
+	}
 }
 
 .error {
@@ -16,5 +16,3 @@
 	border-radius: 8px;
 	font-size: 14px;
 }
-
-

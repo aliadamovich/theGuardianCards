@@ -4,7 +4,8 @@
 	gap: 15px;
 	transition: all 0.3s ease 0s;
 
-	a, button {
+	a,
+	button {
 		border: none;
 		background-color: transparent;
 		display: flex;
@@ -12,9 +13,9 @@
 		align-items: center;
 		transition: all 0.3s ease 0s;
 		cursor: pointer;
-		&:hover{
+		&:hover {
 			svg {
-			background-color: #636262;
+				background-color: #636262;
 			}
 		}
 		svg {
@@ -29,7 +30,7 @@
 
 .likeButton {
 	svg {
-		color: yellow
+		color: yellow;
 	}
 }
 
@@ -46,5 +47,5 @@
 }
 
 .editButton {
-	@extend .deleteButton
+	@extend .deleteButton;
 }

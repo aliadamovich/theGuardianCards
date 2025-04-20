@@ -1,49 +1,47 @@
 .pagination {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+	align-items: center;
 	color: #fff;
-  .buttons {
-    display: flex;
-    column-gap: 5px;
-    align-items: center;
+	.buttons {
+		display: flex;
+		column-gap: 5px;
+		align-items: center;
 
-    .button {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 24px;
-      height: 24px;
-      font-size: 12px;
-      background: none;
-      border: none;
-      border-radius: 2px;
+		.button {
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-width: 24px;
+			height: 24px;
+			font-size: 12px;
+			background: none;
+			border: none;
+			border-radius: 2px;
 
-      &:hover {
-        border: 1px solid #fff;
+			&:hover {
+				border: 1px solid #fff;
 				border-radius: 4px;
-      }
+			}
 
-      &:disabled {
-        cursor: default;
+			&:disabled {
+				cursor: default;
 				color: #504f4f;
-      }
+			}
 
-      &.active {
-        touch-action: none;
-        color: #000;
-        background-color: #fff;
+			&.active {
+				touch-action: none;
+				color: #000;
+				background-color: #fff;
 				border-radius: 4px;
-      }
+			}
 
-      &.arrowDisabled {
-        color: #504f4f;
+			&.arrowDisabled {
+				color: #504f4f;
 				border: none;
-      }
-    }
-  }
+			}
+		}
+	}
 }
-
-

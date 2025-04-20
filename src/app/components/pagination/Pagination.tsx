@@ -3,7 +3,6 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import s from './pagination.module.scss'
 import { usePagination } from './usePagination'
 
-
 type Props = {
 	className?: string
 	currentPage: number
@@ -11,22 +10,11 @@ type Props = {
 	totalPages?: number
 }
 
-export const Pagination = ({
-	className,
-	currentPage,
-	onPageChange,
-	totalPages = 1,
-}: Props) => {
-	const {
-		pages,
-		hasPrevGroup,
-		hasNextGroup,
-		prevGroupPage,
-		nextGroupPage
-	} = usePagination(currentPage, totalPages, 5)
+export const Pagination = ({ className, currentPage, onPageChange, totalPages = 1 }: Props) => {
+	const { pages, hasPrevGroup, hasNextGroup, prevGroupPage, nextGroupPage } = usePagination(currentPage, totalPages, 5)
 
 	const handlePageClick = (page: number) => {
-		if (page !== currentPage ) {
+		if (page !== currentPage) {
 			onPageChange(page)
 		}
 	}
@@ -67,7 +55,6 @@ export const Pagination = ({
 					<FiChevronRight />
 				</button>
 			</div>
-
-			</div>
+		</div>
 	)
 }

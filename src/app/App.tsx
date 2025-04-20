@@ -1,8 +1,8 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from 'react-router-dom'
 import s from './styles/App.module.scss'
 
 function App() {
-  return (
+	return (
 		<div className={s.appContainer}>
 			<header className={s.header}></header>
 			<main className={s.main}>
@@ -10,7 +10,7 @@ function App() {
 			</main>
 			<footer className={s.footer}>© Alesya Adamovich</footer>
 		</div>
-  )
+	)
 }
 
 export default App

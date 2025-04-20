@@ -11,26 +11,26 @@ export const guardianApi = createApi({
 	endpoints: (builder) => ({
 		getArticles: builder.query<GuardianResponse<'list'>, SearchParams>({
 			query: (params) => {
-				const { pageSize, ...rest } = params;
+				const { pageSize, ...rest } = params
 				return {
-				url: 'search',
-				params: {
-					...rest, 
-					'api-key': API_KEY,
-					'page-size': pageSize,
-					'show-fields': params['show-fields'] || 'thumbnail,trailText,headline',
+					url: 'search',
+					params: {
+						...rest,
+						'api-key': API_KEY,
+						'page-size': pageSize,
+						'show-fields': params['show-fields'] || 'thumbnail,trailText,headline',
+					},
 				}
-			}
-		},
-	}),
+			},
+		}),
 		getArticleById: builder.query<GuardianResponse<'single'>, string>({
 			query: (id) => ({
 				url: `/${id}`,
 				params: {
 					'api-key': API_KEY,
-					'show-fields': 'thumbnail,trailText,headline,body'
-				}
-			})
+					'show-fields': 'thumbnail,trailText,headline,body',
+				},
+			}),
 		}),
 	}),
 })

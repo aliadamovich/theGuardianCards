@@ -9,7 +9,6 @@
 	align-items: center;
 	position: relative;
 	width: 100%;
-
 }
 
 .input {
@@ -27,21 +26,20 @@
 	}
 
 	&:disabled {
-    color: #504f4f;
+		color: #504f4f;
 		border-color: #504f4f;
-  }
+	}
 
 	&.error {
 		border-color: #d32f2f;
-  }
+	}
 	&.search {
-	padding-left: 36px;
+		padding-left: 36px;
 	}
 
-  &:hover:not(&:disabled) {
-    border-color: #504f4f;
-  }
-
+	&:hover:not(&:disabled) {
+		border-color: #504f4f;
+	}
 }
 
 .startIcon {
@@ -50,10 +48,10 @@
 	left: 12px;
 	transform: translateY(-50%);
 	width: 20px;
-  height: 20px;
+	height: 20px;
 	color: #504f4f;
 	display: grid;
-  place-items: center;
+	place-items: center;
 }
 
 .label {
