@@ -22,21 +22,17 @@ export const useFilteredArticles = () => {
 	const debouncedSearchTerm = useDebounceValue(searchTerm)
 
 	const pageSize = 9
-	//d
 	const [searchParams, setSearchParams] = useSearchParams()
- const urlPage = Number(searchParams.get('page')) || 1
+	const urlPage = Number(searchParams.get('page')) || 1
 	const [currentPage, setCurrentPage] = useState(urlPage)
 
-   useEffect(() => {
+	useEffect(() => {
 		if (activeFilter !== 'favorites') {
 			setSearchParams({ page: currentPage.toString() }, { replace: true })
 		} else {
 			setSearchParams({}, { replace: true }) // очищаем всё
 		}
 	}, [currentPage, activeFilter, setSearchParams])
-
-	//d
-
 
 	const adjustedPageSize =
 		activeFilter === 'favorites'
@@ -51,15 +47,11 @@ export const useFilteredArticles = () => {
 			: skipToken,
 	)
 
-	// useEffect(() => {
-	// 	setCurrentPage(1)
-	// }, [debouncedSearchTerm, activeFilter])
-
 	const apiArticles = data?.response.results || []
 	const filteredApiArticles = apiArticles.filter((article) => !deletedArticles.includes(article.id))
 
 	const filteredUserArticles = userCreatedArticles.filter((article) => !deletedArticles.includes(article.id))
-	//ds
+
 	const searchFilteredFavorites = debouncedSearchTerm
 		? favoriteArticles.filter(
 				(article) =>
@@ -76,8 +68,6 @@ export const useFilteredArticles = () => {
 		activeFilter === 'favorites'
 			? favoriteArticles.length
 			: (data?.response.total || 0) + (currentPage === 1 ? filteredUserArticles.length : 0)
-	console.log(favoriteArticles.length)
-	console.log(favoriteArticles)
 
 	return {
 		currentPage,

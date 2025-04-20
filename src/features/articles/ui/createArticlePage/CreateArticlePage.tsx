@@ -7,7 +7,7 @@ export const CreateArticlePage = () => {
 	const navigate = useNavigate()
 	const { id } = useParams<{ id: string }>()
 	const isEditing = !!id
-	
+
 	return (
 		<div className={s.container}>
 			<div className={s.header}>
@@ -16,6 +16,5 @@ export const CreateArticlePage = () => {
 			</div>
 			<CreateArticleForm />
 		</div>
-
 	)
 }

@@ -32,19 +32,20 @@
 }
 
 .title {
+	max-width: 100%;
 	font-size: 18px;
 	font-weight: 600;
-
+	line-height: 1.4;
 	@extend .textClamp;
-	-webkit-line-clamp: 3;
 	line-clamp: 3;
+	-webkit-line-clamp: 3;
+	max-height: calc(1.4em * 3);
 }
 
 .trailText {
 	color: #aaa;
 
 	@extend .textClamp;
-	-webkit-line-clamp: 3;
 	line-clamp: 2;
 	-webkit-line-clamp: 2;
 }

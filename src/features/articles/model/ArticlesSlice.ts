@@ -20,6 +20,7 @@ export const articlesSlice = createSlice({
 		filter: 'all',
 		searchTerm: '',
 	} as ArticlesState,
+
 	reducers: {
 		toggleFavorite: (state, action: PayloadAction<GuardianArticle>) => {
 			if (state.favoriteIds.includes(action.payload.id)) {

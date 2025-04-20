@@ -1,11 +1,14 @@
 {
 	"name": "guardiancards",
+	"homepage": "https://aliadamovich.github.io/theGuardianCards",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b && vite build",
+		"predeploy": "pnpm run build",
+		"deploy": "gh-pages -d dist",
 		"lint": "eslint .",
 		"preview": "vite preview"
 	},
@@ -13,6 +16,7 @@
 		"@hookform/resolvers": "^5.0.1",
 		"@reduxjs/toolkit": "^2.7.0",
 		"clsx": "^2.1.1",
+		"gh-pages": "^6.3.0",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"react-hook-form": "^7.55.0",

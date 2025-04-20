@@ -10,15 +10,15 @@ import noImage from '@/assets/no-photo.jpg'
 export const Article = ({ article }: { article: GuardianArticle }) => {
 	const [isHovering, setIsHovering] = useState(false)
 	const navigate = useNavigate()
-	const [searchParams] = useSearchParams();
-	const currentPage = searchParams.get('page') || '1';
+	const [searchParams] = useSearchParams()
+	const currentPage = searchParams.get('page') || '1'
 
 	const handleClick = () => {
 		navigate(`${PATH.PRODUCTS}/${encodeURIComponent(article.id)}`, {
-			state: { fromPage: currentPage }
-		});
-	};
-	
+			state: { fromPage: currentPage },
+		})
+	}
+
 	return (
 		<div
 			key={article.id}
@@ -31,7 +31,9 @@ export const Article = ({ article }: { article: GuardianArticle }) => {
 				<span className={clsx(s.section, s.date)}>{new Date(article.webPublicationDate).toLocaleDateString()}</span>
 				<h3 className={s.title}>{article.webTitle}</h3>
 				<p className={s.section}>{article.sectionName}</p>
-				{article.fields.trailText && (<p className={s.trailText} dangerouslySetInnerHTML={{ __html: article.fields.trailText }}></p>)}
+				{article.fields.trailText && (
+					<p className={s.trailText} dangerouslySetInnerHTML={{ __html: article.fields.trailText }}></p>
+				)}
 			</div>
 
 			<div className={s.imageContainer}>

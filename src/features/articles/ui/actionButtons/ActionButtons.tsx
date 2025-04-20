@@ -26,8 +26,8 @@ export const ActionButtons = ({ article, isHovering, redirectAfterDeleting = fal
 	const isFavorite = favorites.includes(article.id)
 	const userCreatedArticles = useAppSelector(selectUserCreated)
 	const userArticle = userCreatedArticles.find((a) => a.id === article.id)
-	const location = useLocation();
-	const returnPage = location.state?.fromPage || 1;
+	const location = useLocation()
+	const returnPage = location.state?.fromPage || 1
 
 	const handleFavoriteClick = (e: React.MouseEvent) => {
 		e.stopPropagation()

@@ -23,7 +23,6 @@ export const TextField = ({
 }: TextFieldProps) => {
 	const inputId = useId()
 	const showError = !!errorMessage && errorMessage.length > 0
-
 	const classNames = clsx(s.input, search && s.search, showError && s.error)
 
 	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {

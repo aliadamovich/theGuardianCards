@@ -1,12 +1,12 @@
 import App from '@/app/App'
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { createHashRouter, Navigate } from 'react-router-dom'
 import { PATH } from '@/routes/Paths'
 import { ArticlesPage } from '@/features/articles/ui/ArticlesPage'
 import { SingleArticlePage } from '@/features/articles/ui/singleArticlePage/SingleArticlePage'
 import { CreateArticlePage } from '@/features/articles/ui/createArticlePage/CreateArticlePage'
 import { NotFound } from '@/app/components/notFound/NotFound'
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
 	{
 		path: PATH.ROOT,
 		element: <App />,

@@ -12,11 +12,11 @@ import { MSG } from '@/features/articles/lib/messagesVariables'
 
 export const SingleArticlePage = () => {
 	const { id } = useParams<{ id: string }>()
-	const location = useLocation();
-	const returnPage = location.state?.fromPage || 1;
-	
+	const location = useLocation()
+	const returnPage = location.state?.fromPage || 1
+
 	if (!id) {
-		return <div>Invalid article ID</div>
+		return <ErrorMessage message={MSG.ARTICLE_NOT_FOUND} fullScreen />
 	}
 
 	const userCreatedArticles = useAppSelector(selectUserCreated)

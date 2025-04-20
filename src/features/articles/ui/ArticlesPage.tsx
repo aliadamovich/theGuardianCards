@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react'
-import { useGetArticlesQuery } from '../api/guardianApi'
-import { selectDeleted, selectFilter, selectSearchTerm, selectUserCreated } from '../model/ArticlesSlice'
+import { selectFilter } from '../model/ArticlesSlice'
 import { Article } from './article/Article'
 import { Link } from 'react-router-dom'
 import s from './ArticlesPage.module.scss'
@@ -30,7 +28,7 @@ export const ArticlesPage = () => {
 			<div className={s.controls}>
 				<FilterButtons disabled={isLoading || isFetching} />
 				<Button as={Link} to={PATH.CREATE_PRODUCT} variant="link">
-					Create New Article +{' '}
+					Create New Article +
 				</Button>
 			</div>
 			{isLoading && <Loader />}
